@@ -48,10 +48,10 @@ foreach ($BlockService in $ServicesBlocklist) {
 
     $found = $ServicesKey | Get-ItemProperty | where { [bool]($_.PSobject.properties["ImagePath"]) -and $_.imagepath -match $BlockService }
     if ($found -and $found.Start -ne 4) {
-        write-host "Service $BlockService found on this machine. SUNBURST would DISABLE this service and sleep until reboot. Service was NOT DISABLED on this machine."
+        Write-Output "Service $BlockService found on this machine. SUNBURST would DISABLE this service and sleep until reboot. Service was NOT DISABLED on this machine."
     }
     if ($found -and $found.Start -eq 4) {
-        write-host "Service $BlockService found on this machine. SUNBURST would DISABLE this service and sleep until reboot. Service was DISABLED on this machine."
+        Write-Output "Service $BlockService found on this machine. SUNBURST would DISABLE this service and sleep until reboot. Service was DISABLED on this machine."
     }
 }
 
@@ -64,7 +64,7 @@ $DriversBlocklist = @( 'cybkerneltracker.sys', 'atrsdfw.sys', 'eaw.sys', 'rvsavd
 foreach ($BlockDriver in $DriversBlocklist) {
     $found = $ServicesKey | Get-ItemProperty | where { [bool]($_.PSobject.properties["ImagePath"]) -and $_.imagepath -match $BlockDriver }
     if ($found) {
-        write-host "Driver $BlockDriver found on this machine. SUNBURST will not execute."
+        Write-Output "Driver $BlockDriver found on this machine. SUNBURST will not execute."
     }
 }
 
@@ -89,6 +89,6 @@ $AllProcesses = Get-Process
 foreach ($BlockProcess in $ProcessesBlocklist) {
     $found = $AllProcesses | where { $_.ProcessName -match $BlockProcess }
     if ($found) {
-        write-host "Process $BlockProcess found on this machine. SUNBURST will not execute."
+        Write-Output "Process $BlockProcess found on this machine. SUNBURST will not execute."
     }
 }
